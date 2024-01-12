@@ -10,14 +10,15 @@ using (var p = new ProducerBuilder<Null, string>(config).Build())
 
   try
   {
-    for (int i = 0; i < 98; i++)
-    {
-      // var newMsg = await p.ProduceAsync("sample-topic", new Message<Null, string> { Value = "test" });
-      // var newMsg =
-      p.Produce("sample-topic", new Message<Null, string> { Value = "Sending this msg # " + i.ToString() }, handler);
-    }
+    // p.Flush();
 
-    // Console.WriteLine($"Delivered '{newMsg.Value}' to '{newMsg.TopicPartitionOffset}'");
+    // for (int i = 0; i < 98; i++)
+    // {
+    //  p.Produce("sample-topic", new Message<Null, string> { Value = "Sending this msg # " + i.ToString() }, handler);
+    // }
+
+    var newMsg = await p.ProduceAsync("sample-topic", new Message<Null, string> { Value = "Message single" });
+    Console.WriteLine($"Delivered '{newMsg.Value}' to '{newMsg.TopicPartitionOffset}'");
   }
   catch (ProduceException<Null, string> ex)
   {
